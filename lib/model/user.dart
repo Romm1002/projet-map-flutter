@@ -16,10 +16,10 @@ class MyUser {
     return "$prenom $nom";
   }
 
-  MyUser.empty(){
-    id = "";
-    nom = "";
-    prenom = "";
+  MyUser.defaut(){
+    id = "upX4ECje0x3UY28cd9iU";
+    nom = "test1";
+    prenom = "test1";
   }
 
   MyUser(DocumentSnapshot snapshot){
