@@ -20,6 +20,7 @@ class _CarteGoogleState extends State<CarteGoogle> {
   Completer<GoogleMapController> completer = Completer();
   late CameraPosition camera;
   List<MyUser> utilisateurs = [];
+  BitmapDescriptor myCustomIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue);
 
   @override
   void initState() {
@@ -73,7 +74,12 @@ class _CarteGoogleState extends State<CarteGoogle> {
         return Marker(
           markerId: MarkerId(user.id),
           position: LatLng(user.latitude, user.longitude),
-          infoWindow: InfoWindow(title: "Utilisateur ${user.id}"),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), // Couleur de l'icône
+          alpha: 1, // Transparence de l'icône
+          infoWindow: InfoWindow(
+            title: "Utilisateur ${user.id}",
+            snippet: "Position : ${user.latitude}, ${user.longitude}", // Informations supplémentaires dans l'info-bulle
+          ),
         );
       }).toSet(),
     );
