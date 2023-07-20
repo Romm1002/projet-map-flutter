@@ -35,7 +35,6 @@ class _ChatViewState extends State<ChatView> {
             ),
           ],
         ),
-        backgroundColor: mainColor,
       ),
       body: Placeholder()
     );
