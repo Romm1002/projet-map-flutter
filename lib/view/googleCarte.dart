@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_flutter/model/user.dart';
-import 'package:map_flutter/globale.dart';
 import 'package:map_flutter/view/chatView.dart';
 
 class CarteGoogle extends StatefulWidget {
-  Position location;
+  final Position location;
   CarteGoogle({Key? key, required this.location}) : super(key: key);
 
   @override
@@ -81,7 +80,7 @@ class _CarteGoogleState extends State<CarteGoogle> {
                   return ChatView(otherUser: user);
                 }
             ));
-          }
+          },
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), // Couleur de l'icône
           alpha: 1, // Transparence de l'icône
           infoWindow: InfoWindow(
