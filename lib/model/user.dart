@@ -7,10 +7,11 @@ import '../globale.dart';
 
 class MyUser {
   late String id;
-  late String mail;
   late String nom;
   late String prenom;
   String? avatar;
+  double latitude = 48.8035403;
+  double longitude = 2.1266886;
 
   String get fullName {
     return "$prenom $nom";
@@ -18,7 +19,6 @@ class MyUser {
 
   MyUser.empty(){
     id = "";
-    mail = "";
     nom = "";
     prenom = "";
   }
@@ -26,10 +26,11 @@ class MyUser {
   MyUser(DocumentSnapshot snapshot){
     id = snapshot.id;
     Map<String,dynamic> map = snapshot.data() as Map<String,dynamic>;
-    mail = map["EMAIL"];
     nom = map["NOM"];
     prenom = map["PRENOM"];
     avatar = map["AVATAR"] ?? defaultImage;
+    latitude = map["LATITUDE"] ?? 0.0;
+    longitude = map["LONGITUDE"] ?? 0.0;
   }
 
 
