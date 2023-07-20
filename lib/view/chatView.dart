@@ -5,7 +5,7 @@ import '../globale.dart';
 import '../model/user.dart';
 
 class ChatView extends StatefulWidget {
-  final User otherUser;
+  final MyUser otherUser;
   const ChatView({super.key, required this.otherUser});
 
   @override
@@ -15,7 +15,7 @@ class ChatView extends StatefulWidget {
 class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
-    User otherUser = widget.otherUser;
+    MyUser otherUser = widget.otherUser;
     return Scaffold(
       appBar: AppBar(
         title: Row(
