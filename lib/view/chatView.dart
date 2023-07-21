@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../globale.dart';
@@ -145,13 +141,13 @@ class _ChatViewState extends State<ChatView> {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               child: TextField(
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 controller: msg,
                 onSubmitted: (input){
                   sendMsg();
                 },
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   hintText: "iMessage",
                   suffixIcon: IconButton(
                       icon: const Icon(Icons.send),

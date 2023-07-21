@@ -15,13 +15,14 @@ class _MapViewState extends State<MapView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Map"),
+        backgroundColor: const Color(0xff2c2c2c),
+        title: const Text("Utilisateurs autour de vous"),
       ),
       body: FutureBuilder<Position>(
         future: PermissionGps().init(),
           builder: (context, snap){
             if(snap.data == null){
-              return Center(child: Text("Aucune donnée"));
+              return const Center(child: Text("Aucune donnée"));
             }
             else{
               Position location = snap.data!;
