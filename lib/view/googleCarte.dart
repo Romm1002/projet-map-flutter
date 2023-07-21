@@ -46,7 +46,11 @@ class _CarteGoogleState extends State<CarteGoogle> {
       List<MyUser> listeUtilisateurs = [];
       querySnapshot.docs.forEach((document) {
         MyUser user = MyUser(document);
-        listeUtilisateurs.add(user);
+        if(user.id == me.id){
+          me = user;
+        }else{
+          listeUtilisateurs.add(user);
+        }
       });
 
       // Mettre à jour la liste d'utilisateurs dans l'état de notre widget
@@ -84,7 +88,7 @@ class _CarteGoogleState extends State<CarteGoogle> {
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), // Couleur de l'icône
           alpha: 1, // Transparence de l'icône
           infoWindow: InfoWindow(
-            title: "Utilisateur ${user.id}",
+            title: "Utilisateur ${user.fullName}",
             snippet: "Position : ${user.latitude}, ${user.longitude}", // Informations supplémentaires dans l'info-bulle
           ),
         );

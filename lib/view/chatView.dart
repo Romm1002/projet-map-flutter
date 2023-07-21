@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +17,46 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
+  //variable
+  TextEditingController msg = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     MyUser otherUser = widget.otherUser;
+    List? conversation = [];
+
+    if(otherUser.messages != null && otherUser.messages?[me.id] != null){
+      conversation = List.from(conversation)..addAll(otherUser.messages![me.id]);
+    }
+    if(me.messages != null && me.messages?[otherUser.id] != null){
+      conversation = List.from(conversation)..addAll(me.messages![otherUser.id]);
+    }
+    conversation.sort((m1, m2) {
+      return m1["DATE"].compareTo(m2["DATE"]);
+    });
+
+    sendMsg(){
+      if(msg.text.replaceAll(' ', '') != ""){
+        if(me.messages?[otherUser.id] == null){
+          me.messages?[otherUser.id] = [];
+        }
+        me.messages?[otherUser.id].add(
+            {
+              "CONTENU": msg.text,
+              "DATE": Timestamp.fromDate(DateTime.now()),
+              "FROM": me.id
+            }
+        );
+        Map<String, dynamic> data = {
+          "MESSAGES": me.messages
+        };
+        FirebaseFirestore.instance.collection("UTILISATEURS").doc(me.id).update(data);
+        setState(() {
+          msg.text = "";
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -35,7 +76,50 @@ class _ChatViewState extends State<ChatView> {
           ],
         ),
       ),
-      body: Placeholder()
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: conversation.length,
+              itemBuilder: (context, index){
+                Map message = conversation![index];
+                if(message['FROM'] == me.id){
+                  return  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    color: Colors.blue,
+                    child: Text(message['CONTENU']),
+                  );
+                }else{
+                  return  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    color: Colors.green,
+                    child: Text(message['CONTENU']),
+                  );
+                }
+              }
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              child: TextField(
+                controller: msg,
+                decoration: InputDecoration(
+                  hintText: "Message...",
+                  suffixIcon: IconButton(
+                      icon: const Icon(Icons.send),
+                      onPressed: (){
+                        sendMsg();
+                      },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
