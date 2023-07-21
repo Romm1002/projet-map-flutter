@@ -106,6 +106,9 @@ class _ChatViewState extends State<ChatView> {
               padding: const EdgeInsets.all(16),
               child: TextField(
                 controller: msg,
+                onSubmitted: (input){
+                  sendMsg();
+                },
                 decoration: InputDecoration(
                   hintText: "Message...",
                   suffixIcon: IconButton(
