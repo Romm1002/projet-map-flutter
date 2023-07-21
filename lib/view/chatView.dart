@@ -58,19 +58,22 @@ class _ChatViewState extends State<ChatView> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Row(
+        centerTitle: true,
+        backgroundColor: const Color(0xff2c2c2c),
+        title: Column(
           children: [
             CircleAvatar(
-              radius: 20,
+              radius: 15,
               backgroundImage: NetworkImage(otherUser.avatar ?? defaultImage),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16),
+              padding: const EdgeInsets.only(top: 7),
               child: Text(
                 otherUser.fullName,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white, fontSize: 20),
+                style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400),
               ),
             ),
           ],
@@ -85,29 +88,68 @@ class _ChatViewState extends State<ChatView> {
               itemBuilder: (context, index){
                 Map message = conversation![index];
                 if(message['FROM'] == me.id){
-                  return  Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                    color: Colors.blue,
-                    child: Text(message['CONTENU']),
+                  return  Column(
+                    children: [
+                      ListTile(
+                        title: Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Text(
+                              message['CONTENU'],
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
                   );
                 }else{
-                  return  Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                    color: Colors.green,
-                    child: Text(message['CONTENU']),
+                  return  Column(
+                      children: [
+                        ListTile(
+                          title: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff2c2c2c),
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Text(
+                                message['CONTENU'],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]
                   );
                 }
               }
             ),
           ),
+          const Divider(height: 18.0, color: Colors.grey),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
               child: TextField(
+                style: TextStyle(color: Colors.white),
                 controller: msg,
                 decoration: InputDecoration(
-                  hintText: "Message...",
+                  hintStyle: TextStyle(color: Colors.grey),
+                  hintText: "iMessage",
                   suffixIcon: IconButton(
                       icon: const Icon(Icons.send),
                       onPressed: (){

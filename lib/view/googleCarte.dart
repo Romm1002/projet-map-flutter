@@ -7,6 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_flutter/model/user.dart';
 import 'package:map_flutter/view/chatView.dart';
 
+import '../globale.dart';
+
 class CarteGoogle extends StatefulWidget {
   final Position location;
   CarteGoogle({Key? key, required this.location}) : super(key: key);
