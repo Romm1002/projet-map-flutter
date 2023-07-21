@@ -17,7 +17,7 @@ class MyUser {
     return "$prenom $nom";
   }
 
-  MyUser.empty(){
+  MyUser.defaut(){
     id = "upX4ECje0x3UY28cd9iU";
   }
 
