@@ -147,6 +147,9 @@ class _ChatViewState extends State<ChatView> {
               child: TextField(
                 style: TextStyle(color: Colors.white),
                 controller: msg,
+                onSubmitted: (input){
+                  sendMsg();
+                },
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.grey),
                   hintText: "iMessage",
