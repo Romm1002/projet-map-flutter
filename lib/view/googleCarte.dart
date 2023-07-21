@@ -22,17 +22,17 @@ class _CarteGoogleState extends State<CarteGoogle> {
   Completer<GoogleMapController> completer = Completer();
   late CameraPosition camera;
   List<MyUser> utilisateurs = [];
-  BitmapDescriptor myCustomIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue);
+  BitmapDescriptor myCustomIcon = BitmapDescriptor.defaultMarker;
 
   @override
   void initState() {
-    // TODO: implement initState
     camera = CameraPosition(
       target: LatLng(widget.location.latitude, widget.location.longitude),
       zoom: 14,
     );
     super.initState();
     recupererUtilisateurs();
+    addCustomIcon();
   }
 
   // Méthode pour récupérer les utilisateurs depuis Firebase
@@ -65,6 +65,18 @@ class _CarteGoogleState extends State<CarteGoogle> {
     }
   }
 
+  void addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), "assets/person.png")
+        .then(
+          (icon) {
+        setState(() {
+          myCustomIcon = icon;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
@@ -87,7 +99,7 @@ class _CarteGoogleState extends State<CarteGoogle> {
                 }
             ));
           },
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), // Couleur de l'icône
+          icon: myCustomIcon,
           alpha: 1, // Transparence de l'icône
           infoWindow: InfoWindow(
             title: "Utilisateur ${user.fullName}",
